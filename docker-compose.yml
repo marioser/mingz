@@ -22,35 +22,37 @@ services:
         - NET_ADMIN
     environment:
         DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
+        PORTAL_PASSPHRASE: "Sgsoluciones2024*"
+        PORTAL_SSID: "Hostpot_UBOX"
 
   # ------------------------------------------------------------------------------------
   # Node-RED
   # ------------------------------------------------------------------------------------
-  # node-red:
-  #   image: bh.cr/balenalabs/balena-node-red-aarch64
-  #   container_name: node-red
-  #   privileged: true
-  #   restart: unless-stopped
-  #   volumes:
-  #       - 'node-red-data:/data'
-  #   labels:
-  #       io.balena.features.dbus: '1'
-  #       io.balena.features.sysfs: '1'
-  #       io.balena.features.supervisor-api: '1'
-  #       io.balena.features.balena-api: '1'
-  #   ports:
-  #       - 1880:80
-  #   environment:
-  #       PORT: 80
-  #       USERNAME: "balena"
-  #       PASSWORD: "balena"
-  #       ENCRIPTION_KEY: "balena"        
-  #   cap_add:
-  #       - SYS_RAWIO
-  #   devices:
-  #       - "/dev/mem:/dev/mem"
-  #       - "/dev/gpiomem:/dev/gpiomem"
-  #       - "/dev/i2c-1:/dev/i2c-1"
+  node-red:
+    image: bh.cr/balenalabs/balena-node-red-aarch64
+    container_name: node-red
+    privileged: true
+    restart: unless-stopped
+    volumes:
+        - 'node-red-data:/data'
+    labels:
+        io.balena.features.dbus: '1'
+        io.balena.features.sysfs: '1'
+        io.balena.features.supervisor-api: '1'
+        io.balena.features.balena-api: '1'
+    ports:
+        - 1880:80
+    environment:
+        PORT: 80
+        USERNAME: "balena"
+        PASSWORD: "balena"
+        ENCRIPTION_KEY: "balena"        
+    cap_add:
+        - SYS_RAWIO
+    devices:
+        - "/dev/mem:/dev/mem"
+        - "/dev/gpiomem:/dev/gpiomem"
+        - "/dev/i2c-1:/dev/i2c-1"
   
 
   # # ------------------------------------------------------------------------------------
