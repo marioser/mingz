@@ -33,7 +33,7 @@ You have two options here:
 
 You can deploy this project to a new balenaCloud application in one click using the button below:
 
-[![](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/mpous/ming)
+[![](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/marioser/mingz)
 
 Or, you can create an application in your balenaCloud dashboard and balena push this code to it the traditional way.
 
@@ -50,7 +50,7 @@ While the device boots (it will eventually show up in the Balena dashboard) we w
 
 ```
 cd ~/workspace
-git clone https://github.com/mpous/ming
+git clone https://github.com/marioser/mingz
 cd ming
 ```
 
