@@ -33,6 +33,7 @@ services:
     restart: unless-stopped
     volumes:
         - 'node-red-data:/data'
+    ports: 80:80
     labels:
         # Enable traefik support for this container
         - "traefik.enable=true"
