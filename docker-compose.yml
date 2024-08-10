@@ -22,8 +22,6 @@ services:
         - NET_ADMIN
     environment:
         DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
-        PORTAL_PASSPHRASE: "Sgsoluciones2024*"
-        PORTAL_SSID: "Hostpot_UBOX"
 
   # ------------------------------------------------------------------------------------
   # Node-RED
@@ -54,23 +52,21 @@ services:
         PORT: 80
         USERNAME: "balena"
         PASSWORD: "balena"
-        ENCRIPTION_KEY: "balena"        
+        ENCRIPTION_KEY: "balena"
     cap_add:
         - SYS_RAWIO
     devices:
         - "/dev/mem:/dev/mem"
         - "/dev/gpiomem:/dev/gpiomem"
-        - "/dev/i2c-1:/dev/i2c-1"
     depends_on:
       influxdb:
         condition: service_started
       reverse-proxy:
         condition: service_started
-  
 
-  # # ------------------------------------------------------------------------------------
-  # # MQTT
-  # # ------------------------------------------------------------------------------------
+  # ------------------------------------------------------------------------------------
+  # MQTT
+  # ------------------------------------------------------------------------------------
   mqtt:
     image: eclipse-mosquitto:1.6.15
     container_name: mqtt
@@ -78,9 +74,9 @@ services:
       - "1883:1883"
     restart: always
 
-  # # ------------------------------------------------------------------------------------
-  # # Influxdb
-  # # ------------------------------------------------------------------------------------
+  # ------------------------------------------------------------------------------------
+  # Influxdb
+  # ------------------------------------------------------------------------------------
   influxdb:
     image: influxdb:1.7.11
     container_name: influxdb
@@ -89,15 +85,15 @@ services:
         - influxdb-data:/var/lib/influxdb
         - influxdb-etc:/etc/influxdb
 
-  # # ------------------------------------------------------------------------------------
-  # # Grafana
-  # # ------------------------------------------------------------------------------------
+  # ------------------------------------------------------------------------------------
+  # Grafana
+  # ------------------------------------------------------------------------------------
   grafana:
     image: bh.cr/balenalabs/dashboard
     container_name: grafana
     restart: unless-stopped
     volumes:
-        - "grafana-data:/data"
+      - "grafana-data:/data"
     environment:
       - "GF_SERVER_ROOT_URL=/grafana"
       - "GF_SERVER_SERVE_FROM_SUB_PATH=true"
