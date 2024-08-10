@@ -15,6 +15,8 @@ services:
     image: bh.cr/balenalabs/wifi-connect-rpi
     container_name: wifi-connect
     network_mode: host
+    ports:
+      - 88:80
     labels:
         io.balena.features.dbus: '1'
         io.balena.features.firmware: '1'
