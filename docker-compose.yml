@@ -56,34 +56,34 @@ services:
   # # ------------------------------------------------------------------------------------
   # # MQTT
   # # ------------------------------------------------------------------------------------
-  # mqtt:
-  #   image: eclipse-mosquitto:1.6.15
-  #   container_name: mqtt
-  #   ports:
-  #     - "1883:1883"
-  #   restart: always
+  mqtt:
+    image: eclipse-mosquitto:1.6.15
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+    restart: always
 
   # # ------------------------------------------------------------------------------------
   # # Influxdb
   # # ------------------------------------------------------------------------------------
-  # influxdb:
-  #   image: influxdb:1.7.11
-  #   container_name: influxdb
-  #   restart: unless-stopped
-  #   volumes:
-  #       - influxdb-data:/var/lib/influxdb
-  #       - influxdb-etc:/etc/influxdb
+  influxdb:
+    image: influxdb:1.7.11
+    container_name: influxdb
+    restart: unless-stopped
+    volumes:
+        - influxdb-data:/var/lib/influxdb
+        - influxdb-etc:/etc/influxdb
 
   # # ------------------------------------------------------------------------------------
   # # Grafana
   # # ------------------------------------------------------------------------------------
-  # grafana:
-  #   image: bh.cr/balenalabs/dashboard
-  #   container_name: grafana
-  #   restart: unless-stopped
-  #   ports:
-  #       - "8080:80"
-  #   volumes:
-  #       - "grafana-data:/data"
+  grafana:
+    image: bh.cr/balenalabs/dashboard
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+        - "8080:80"
+    volumes:
+        - "grafana-data:/data"
 
 
