@@ -5,6 +5,7 @@ volumes:
   grafana-data:
   influxdb-data:
   influxdb-etc:
+  zerotier-config:
 
 services:
 
@@ -154,7 +155,7 @@ services:
       image: zerotier/zerotier:latest
       container_name: zerotier
       volumes:
-          - ./config:/var/lib
+          - "zerotier-config:/var/lib"
       cap_add:
         - net_admin
       devices:
