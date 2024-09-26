@@ -146,3 +146,18 @@ services:
         # So that Traefik can listen to the Docker events
         io.balena.features.balena-socket: '1'
     restart: always
+
+  # ------------------------------------------------------------------------------------
+  # Implementar conexion a ZeroTier-One
+  # ------------------------------------------------------------------------------------
+  zerotier:
+      image: zerotier/zerotier:latest
+      container_name: zerotier
+      volumes:
+          - ./config:/var/lib
+      cap_add:
+        - net_admin
+      devices:
+        - /dev/net/tun
+      restart: unless-stopped
+      network_mode: host
