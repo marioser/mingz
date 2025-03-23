@@ -2,7 +2,6 @@ version: '2'
 
 volumes:
   node-red-data:
-  grafana-data:
   zerotier-config:
 
 services:
@@ -18,23 +17,6 @@ services:
         - 'node-red-data:/data'
     ports:
         - 1880:1880
-    cap_add:
-        - SYS_RAWIO
-    devices:
-        - "/dev/mem:/dev/mem"
-        - "/dev/gpiomem:/dev/gpiomem"
-  # ------------------------------------------------------------------------------------
-  # Grafana
-  # ------------------------------------------------------------------------------------
-  grafana:
-    image: bh.cr/balenalabs/dashboard
-    container_name: grafana
-    restart: unless-stopped
-    volumes:
-      - "grafana-data:/data"
-    environment:
-      - "GF_SERVER_ROOT_URL=/grafana"
-      - "GF_SERVER_SERVE_FROM_SUB_PATH=true"
   # ------------------------------------------------------------------------------------
   # Implementar conexion a ZeroTier-One
   # ------------------------------------------------------------------------------------
