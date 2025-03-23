@@ -3,8 +3,6 @@ version: '2'
 volumes:
   node-red-data:
   grafana-data:
-  influxdb-data:
-  influxdb-etc:
   zerotier-config:
 
 services:
@@ -45,12 +43,6 @@ services:
     devices:
         - "/dev/mem:/dev/mem"
         - "/dev/gpiomem:/dev/gpiomem"
-    depends_on:
-      influxdb:
-        condition: service_started
-      reverse-proxy:
-        condition: service_started
-
   # ------------------------------------------------------------------------------------
   # Grafana
   # ------------------------------------------------------------------------------------
@@ -77,11 +69,6 @@ services:
       - "traefik.http.middlewares.redirect-root.redirectregex.regex=^/"
       - "traefik.http.middlewares.redirect-root.redirectregex.replacement=/grafana"
       - "traefik.http.routers.grafana-main.middlewares=redirect-root"
-    depends_on:
-      influxdb:
-        condition: service_started
-      reverse-proxy:
-        condition: service_started
 
   # ------------------------------------------------------------------------------------
   # Implementar conexion a ZeroTier-One
