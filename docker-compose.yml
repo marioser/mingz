@@ -18,26 +18,6 @@ services:
         - 'node-red-data:/data'
     ports:
         - 1880:1880
-    labels:
-        # Enable traefik support for this container
-        - "traefik.enable=true"
-        # Set service port
-        - "traefik.http.services.node-red.loadbalancer.server.port=1880"
-        # Make it available on the "web" entrypoint which is defined below as :80
-        - "traefik.http.routers.node-red.entrypoints=web"
-        # Add a specific path prefix that will be expected on the URL suffix
-        - "traefik.http.routers.node-red.rule=PathPrefix(`/node-red`)"
-        - "traefik.http.middlewares.strip-node-red-prefix.stripprefix.forceSlash=false"
-        - "traefik.http.routers.node-red.middlewares=strip-node-red-prefix"
-        - "io.balena.features.dbus=true"
-        - "io.balena.features.sysfs=true"
-        - "io.balena.features.supervisor-api=true"
-        - "io.balena.features.balena-api=true"
-    environment:
-        PORT: 80
-        USERNAME: "balena"
-        PASSWORD: "balena"
-        ENCRIPTION_KEY: "balena"
     cap_add:
         - SYS_RAWIO
     devices:
@@ -55,21 +35,6 @@ services:
     environment:
       - "GF_SERVER_ROOT_URL=/grafana"
       - "GF_SERVER_SERVE_FROM_SUB_PATH=true"
-    labels:
-      # Enable traefik support for this container
-      - "traefik.enable=true"
-      # Set service port
-      - "traefik.http.services.grafana.loadbalancer.server.port=80"
-      # Make it available on the "web" entrypoint which is defined below as :80
-      - "traefik.http.routers.grafana.entrypoints=web"
-      # Add a specific path prefix that will be expected on the URL suffix
-      - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
-      # Redirect a request to root page to grafana service
-      - "traefik.http.routers.grafana-main.rule=( Path(`/`) )"
-      - "traefik.http.middlewares.redirect-root.redirectregex.regex=^/"
-      - "traefik.http.middlewares.redirect-root.redirectregex.replacement=/grafana"
-      - "traefik.http.routers.grafana-main.middlewares=redirect-root"
-
   # ------------------------------------------------------------------------------------
   # Implementar conexion a ZeroTier-One
   # ------------------------------------------------------------------------------------
