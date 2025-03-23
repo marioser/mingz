@@ -9,7 +9,7 @@ services:
   # Node-RED
   # ------------------------------------------------------------------------------------
   node-red:
-    image: nodered/node-red
+    image: nodered/node-red:4.0.9-22-minimal
     container_name: node-red
     privileged: true
     restart: unless-stopped
