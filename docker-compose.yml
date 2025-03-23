@@ -30,7 +30,7 @@ services:
   # Node-RED
   # ------------------------------------------------------------------------------------
   node-red:
-    image: bh.cr/balenalabs/balena-node-red-aarch64
+    image: nodered/node-red
     container_name: node-red
     privileged: true
     restart: unless-stopped
