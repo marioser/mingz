@@ -8,24 +8,6 @@ volumes:
   zerotier-config:
 
 services:
-
-  # ------------------------------------------------------------------------------------
-  # BalenaLabs WiFi-Connect
-  # ------------------------------------------------------------------------------------
-  wifi-connect:
-    image: bh.cr/balenalabs/wifi-connect-rpi
-    container_name: wifi-connect
-    network_mode: host
-    ports:
-      - 88:80
-    labels:
-        io.balena.features.dbus: '1'
-        io.balena.features.firmware: '1'
-    cap_add:
-        - NET_ADMIN
-    environment:
-        DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"
-
   # ------------------------------------------------------------------------------------
   # Node-RED
   # ------------------------------------------------------------------------------------
@@ -37,12 +19,12 @@ services:
     volumes:
         - 'node-red-data:/data'
     ports:
-        - 80:80
+        - 1880:1880
     labels:
         # Enable traefik support for this container
         - "traefik.enable=true"
         # Set service port
-        - "traefik.http.services.node-red.loadbalancer.server.port=80"
+        - "traefik.http.services.node-red.loadbalancer.server.port=1880"
         # Make it available on the "web" entrypoint which is defined below as :80
         - "traefik.http.routers.node-red.entrypoints=web"
         # Add a specific path prefix that will be expected on the URL suffix
@@ -68,27 +50,6 @@ services:
         condition: service_started
       reverse-proxy:
         condition: service_started
-
-  # ------------------------------------------------------------------------------------
-  # MQTT
-  # ------------------------------------------------------------------------------------
-  mqtt:
-    image: eclipse-mosquitto:1.6.15
-    container_name: mqtt
-    ports:
-      - "1883:1883"
-    restart: always
-
-  # ------------------------------------------------------------------------------------
-  # Influxdb
-  # ------------------------------------------------------------------------------------
-  influxdb:
-    image: influxdb:1.7.11
-    container_name: influxdb
-    restart: unless-stopped
-    volumes:
-        - influxdb-data:/var/lib/influxdb
-        - influxdb-etc:/etc/influxdb
 
   # ------------------------------------------------------------------------------------
   # Grafana
@@ -121,32 +82,6 @@ services:
         condition: service_started
       reverse-proxy:
         condition: service_started
-
-  # ------------------------------------------------------------------------------------
-  # Traefik Reverse Proxy
-  # ------------------------------------------------------------------------------------
-  reverse-proxy:
-    image: bh.cr/gh_ajlennon/reverse-proxy
-    command:
-        - "--log.level=DEBUG"
-        - "--accesslog=true"
-        - "--accesslog.filepath=/var/log/traefik.log"
-        - "--api.dashboard=true"
-        # Uncomment this to enable the Traefik WebUI on port :8080
-        - "--api.insecure"
-        - "--providers.docker=true"
-        - "--providers.docker.endpoint=unix:///var/run/balena-engine.sock"
-        #- "--providers.docker.exposedbydefault=true"
-        - "--entrypoints.web.address=:80"
-    ports:
-        # The HTTP port
-        - "80:80"
-        # The Dashboard port
-        - "8080:8080"
-    labels:
-        # So that Traefik can listen to the Docker events
-        io.balena.features.balena-socket: '1'
-    restart: always
 
   # ------------------------------------------------------------------------------------
   # Implementar conexion a ZeroTier-One
